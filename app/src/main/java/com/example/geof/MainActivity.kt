@@ -23,18 +23,19 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var dGeoArr: MutableList<DataGeo> = ArrayList()
-        internal const val ACTION_GEOFENCE_EVENT =
-            "HuntMainActivity.treasureHunt.action.ACTION_GEOFENCE_EVENT"
+        internal const val ACTION_GEOFENCE_EVENT = "HuntMainActivity.treasureHunt.action.ACTION_GEOFENCE_EVENT"
     }
+    var x = 0
 
     private lateinit var geofencingClient: GeofencingClient
     private lateinit var viewModel: GeofenceViewModel
-    var flag = 0
+    private var mGeofenceList: ArrayList<Geofence> = ArrayList()
 
     private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
     private val geofencePendingIntent: PendingIntent by lazy {
+        Log.d("fdoidfioufd", "fdoidfioufd: ")
         val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
-        intent.action = ACTION_GEOFENCE_EVENT
+//        intent.action = ACTION_GEOFENCE_EVENT
         PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
@@ -178,11 +179,12 @@ class MainActivity : AppCompatActivity() {
                 .addGeofence(geofence)
                 .build()
 
-            geofencingClient.removeGeofences(geofencePendingIntent).run {
-                addOnCompleteListener {
                     geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent).run {
                         addOnSuccessListener {
-//                            Toast.makeText(this@MainActivity, "geofences_added" + " " + dataGeo.id, Toast.LENGTH_SHORT).show()
+                            if (x == 0){
+                                Toast.makeText(this@MainActivity, "geofences_added" + " " + dataGeo.id, Toast.LENGTH_SHORT).show()
+                                x=51
+                            }
                             Log.e("Add Geofence", geofence.requestId)
                             viewModel.geofenceActivated()
                         }
@@ -193,8 +195,6 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     }
-                }
-            }
     }
 
 
@@ -215,7 +215,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun dataGeo(){
-        dGeoArr.add(DataGeo("Nassagoun", LatLng(30.1048863,31.3717017)))
+        dGeoArr.add(DataGeo("Nassagoun", LatLng(30.1289, 31.3775)))
         dGeoArr.add(DataGeo("Momentum", LatLng(30.1026439,31.371483)))
         dGeoArr.add(DataGeo("RadissonBlue", LatLng(30.1055824,31.3735042)))
     }
