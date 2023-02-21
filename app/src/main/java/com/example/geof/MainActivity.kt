@@ -129,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         locationSettingsResponseTask.addOnCompleteListener {
             if ( it.isSuccessful ) {
                 if (dGeoArr.isNotEmpty()){
+                    removeGeofences()
                     for (i in 0 until dGeoArr.size){
                         addGeofenceForClue(dGeoArr[i])
                     }
@@ -160,7 +161,7 @@ class MainActivity : AppCompatActivity() {
     private fun addGeofenceForClue(dataGeo: DataGeo) {
             val geofence = Geofence.Builder()
                 .setRequestId(dataGeo.id)
-                .setCircularRegion(dataGeo.latLong.latitude, dataGeo.latLong.longitude, 100f)
+                .setCircularRegion(dataGeo.latLong.latitude, dataGeo.latLong.longitude, 500f)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build()
@@ -183,6 +184,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun removeGeofences() {
+        if (!foregroundAndBackgroundLocationPermissionApproved()) {
+            return
+        }
+        geofencingClient.removeGeofences(geofencePendingIntent).run {
+            addOnSuccessListener {
+                Log.d(TAG, "geofences_removed")
+                Toast.makeText(applicationContext, "geofences_removed", Toast.LENGTH_SHORT).show()
+            }
+            addOnFailureListener {
+                Log.d(TAG, "geofences_not_removed")
+            }
+        }
+    }
+
 
 
     private fun dataGeo(){
