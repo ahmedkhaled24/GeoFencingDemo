@@ -23,19 +23,14 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var dGeoArr: MutableList<DataGeo> = ArrayList()
-        internal const val ACTION_GEOFENCE_EVENT = "HuntMainActivity.treasureHunt.action.ACTION_GEOFENCE_EVENT"
     }
-    var x = 0
 
     private lateinit var geofencingClient: GeofencingClient
     private lateinit var viewModel: GeofenceViewModel
-    private var mGeofenceList: ArrayList<Geofence> = ArrayList()
 
     private val runningQOrLater = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q
     private val geofencePendingIntent: PendingIntent by lazy {
-        Log.d("fdoidfioufd", "fdoidfioufd: ")
         val intent = Intent(this, GeofenceBroadcastReceiver::class.java)
-//        intent.action = ACTION_GEOFENCE_EVENT
         PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
@@ -89,12 +84,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             checkDeviceLocationSettingsAndStartGeofence()
         }
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        removeGeofences()
     }
 
 
@@ -170,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             val geofence = Geofence.Builder()
                 .setRequestId(dataGeo.id)
                 .setCircularRegion(dataGeo.latLong.latitude, dataGeo.latLong.longitude, 100f)
-                .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
+                .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                 .build()
 
@@ -179,44 +168,24 @@ class MainActivity : AppCompatActivity() {
                 .addGeofence(geofence)
                 .build()
 
-                    geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent).run {
-                        addOnSuccessListener {
-                            if (x == 0){
-                                Toast.makeText(this@MainActivity, "geofences_added" + " " + dataGeo.id, Toast.LENGTH_SHORT).show()
-                                x=51
-                            }
-                            Log.e("Add Geofence", geofence.requestId)
-                            viewModel.geofenceActivated()
-                        }
-                        addOnFailureListener {
-                            Toast.makeText(this@MainActivity, "geofences_not_added", Toast.LENGTH_SHORT).show()
-                            if ((it.message != null)) {
-                                Log.w(TAG, it.message!!)
-                            }
-                        }
-                    }
-    }
-
-
-
-    private fun removeGeofences() {
-        if (!foregroundAndBackgroundLocationPermissionApproved()) {
-            return
-        }
-        geofencingClient.removeGeofences(geofencePendingIntent).run {
+        geofencingClient.addGeofences(geofencingRequest, geofencePendingIntent).run {
             addOnSuccessListener {
-                Log.d(TAG, "geofences_removed")
-                Toast.makeText(applicationContext, "geofences_removed", Toast.LENGTH_SHORT).show()
+                Log.e("Add Geofence", geofence.requestId)
+                viewModel.geofenceActivated()
             }
             addOnFailureListener {
-                Log.d(TAG, "geofences_not_removed")
+                Toast.makeText(this@MainActivity, "geofences_not_added", Toast.LENGTH_SHORT).show()
+                if ((it.message != null)) {
+                    Log.w(TAG, it.message!!)
+                }
             }
         }
     }
+
 
     private fun dataGeo(){
         dGeoArr.add(DataGeo("Nassagoun", LatLng(30.1289, 31.3775)))
-        dGeoArr.add(DataGeo("Momentum", LatLng(30.1026439,31.371483)))
+        dGeoArr.add(DataGeo("Momentum", LatLng(30.1043354,31.3725273)))
         dGeoArr.add(DataGeo("RadissonBlue", LatLng(30.1055824,31.3735042)))
     }
 }

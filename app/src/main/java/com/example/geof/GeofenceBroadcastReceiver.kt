@@ -6,7 +6,7 @@ import android.content.Intent
 import android.util.Log
 import com.example.geof.aaaa.GeofenceTransitionsJobIntentService
 
-
+private const val TAG = "GeofenceBR"
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
     /**
      * Receives incoming intents.
@@ -16,7 +16,7 @@ class GeofenceBroadcastReceiver : BroadcastReceiver() {
      * Services (inside a PendingIntent) when addGeofences() is called.
      */
     override fun onReceive(context: Context, intent: Intent) {
-        Log.d("fdoidfioufd", "onReceive: ")
+        Log.d(TAG, "onReceive: ")
         // Enqueues a JobIntentService passing the context and intent as parameters
         GeofenceTransitionsJobIntentService.enqueueWork(context, intent)
     }
