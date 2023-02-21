@@ -1,8 +1,7 @@
-package com.example.geof.aaaa
+package com.example.geof
 
 import android.content.Context
 import android.content.res.Resources
-import com.example.geof.R
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.GeofenceStatusCodes
 

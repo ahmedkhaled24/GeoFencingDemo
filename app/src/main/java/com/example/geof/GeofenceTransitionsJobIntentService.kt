@@ -1,4 +1,4 @@
-package com.example.geof.aaaa
+package com.example.geof
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -13,9 +13,7 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.core.app.JobIntentService
 import androidx.core.app.NotificationCompat
-import com.example.geof.MainActivity
-import com.example.geof.R
-import com.example.geof.aaaa.GeofenceErrorMessages.getErrorString
+import com.example.geof.GeofenceErrorMessages.getErrorString
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
 

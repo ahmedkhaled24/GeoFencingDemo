@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.example.geof.aaaa.GeofenceTransitionsJobIntentService
 
 private const val TAG = "GeofenceBR"
 class GeofenceBroadcastReceiver : BroadcastReceiver() {
