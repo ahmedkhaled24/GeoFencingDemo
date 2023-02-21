@@ -18,7 +18,6 @@ class GeofenceViewModel(state: SavedStateHandle) : ViewModel() {
     }
 
     fun geofenceIsActive() =_geofenceIndex.value == _hintIndex.value
-    fun nextGeofenceIndex() = _hintIndex.value ?: 0
 }
 
 private const val HINT_INDEX_KEY = "hintIndex"

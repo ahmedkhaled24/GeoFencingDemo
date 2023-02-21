@@ -18,9 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GeoF"
         tools:targetApi="31">
-        <activity
-            android:name=".aaaa.DecoActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

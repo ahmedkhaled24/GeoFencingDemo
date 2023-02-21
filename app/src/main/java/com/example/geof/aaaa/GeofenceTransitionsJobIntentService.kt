@@ -18,7 +18,6 @@ import com.example.geof.R
 import com.example.geof.aaaa.GeofenceErrorMessages.getErrorString
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingEvent
-import kotlin.math.log
 
 
 class GeofenceTransitionsJobIntentService : JobIntentService() {

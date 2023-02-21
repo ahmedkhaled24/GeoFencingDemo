@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         dataGeo()
 
-        viewModel = ViewModelProviders.of(this, SavedStateViewModelFactory(this.application, this))[GeofenceViewModel::class.java]
+        viewModel = ViewModelProviders.of(
+            this, SavedStateViewModelFactory(this.application, this))[GeofenceViewModel::class.java]
         geofencingClient = LocationServices.getGeofencingClient(this)
         createChannel(this )
     }
@@ -101,7 +102,8 @@ class MainActivity : AppCompatActivity() {
         val foregroundLocationApproved = (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION))
         val backgroundPermissionApproved =
             if (runningQOrLater) {
-                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                PackageManager.PERMISSION_GRANTED ==
+                        ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
             } else {
                 true
             }
@@ -184,9 +186,9 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun dataGeo(){
-        dGeoArr.add(DataGeo("Nassagoun", LatLng(30.1289, 31.3775)))
-        dGeoArr.add(DataGeo("Momentum", LatLng(30.1043354,31.3725273)))
-        dGeoArr.add(DataGeo("RadissonBlue", LatLng(30.1055824,31.3735042)))
+        dGeoArr.add(DataGeo("Place No.1", LatLng(30.1289, 31.3775)))
+        dGeoArr.add(DataGeo("Place No.2", LatLng(30.1043354,31.3725273)))
+        dGeoArr.add(DataGeo("Place No.3", LatLng(30.1055824,31.3735042)))
     }
 }
 
